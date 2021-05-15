@@ -1,0 +1,22 @@
+  SqlConnection sqlconn = new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=|DataDirectory|\\dbpart.mdf;Integrated Security=True;User Instance=True");
+            string sqlstr = "insert into tblpart values(@na,@co,@typ)";
+            SqlCommand sqlcomm = new SqlCommand(sqlstr, sqlconn);
+            sqlcomm.CommandType = CommandType.Text;
+
+            sqlcomm.Parameters.AddWithValue("@na", TextBox2.Text);
+            sqlcomm.Parameters.AddWithValue("@co", TextBox3.Text);
+            sqlcomm.Parameters.AddWithValue("@typ", TextBox4.Text);
+
+            sqlconn.Open();
+            sqlcomm.ExecuteNonQuery();
+            sqlconn.Close();
+
+
+            Label5.Text = "??????? ?? ?????? ??? ??.";
+           
+
+            DataSet ds = new DataSet();
+            SqlDataAdapter adap = new SqlDataAdapter("select * from tblpart", sqlconn);
+            adap.Fill(ds, "tblpart");
+            GridView1.DataSource = ds.Tables["tblpart"].DefaultView;
+            GridView1.DataBind();

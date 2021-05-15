@@ -1,0 +1,24 @@
+
+            SqlConnection sqlconn = new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=|DataDirectory|\\dbpart.mdf;Integrated Security=True;User Instance=True");
+            string sqlstr = "update tblpart set name=@n,color=@col,type=@ty where code=@code";
+            SqlCommand sqlcomm = new SqlCommand(sqlstr, sqlconn);
+            sqlcomm.CommandType = CommandType.Text;
+
+            sqlcomm.Parameters.AddWithValue("@code", TextBox1.Text);
+            sqlcomm.Parameters.AddWithValue("@n", TextBox2.Text);
+            sqlcomm.Parameters.AddWithValue("@col", TextBox3.Text);
+            sqlcomm.Parameters.AddWithValue("@ty", TextBox4.Text);
+
+            sqlconn.Open();
+            sqlcomm.ExecuteNonQuery();
+            sqlconn.Close();
+
+
+            Label5.Text = "??????? ?? ?????? ????? ????.";
+
+
+            DataSet ds = new DataSet();
+            SqlDataAdapter adap = new SqlDataAdapter("select * from tblpart", sqlconn);
+            adap.Fill(ds, "tblpart");
+            GridView1.DataSource = ds.Tables["tblpart"].DefaultView;
+            GridView1.DataBind();

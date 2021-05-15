@@ -1,0 +1,7 @@
+SqlConnection sqlconn = new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=|DataDirectory|\\dbpart.mdf;Integrated Security=True;User Instance=True");
+            string sqlstr = "select * from tblpart where name like  N'%'+@name+'%'";
+            SqlCommand sqlcomm = new SqlCommand(sqlstr, sqlconn);
+            sqlcomm.Parameters.AddWithValue("@name", TextBox2.Text);
+            sqlconn.Open();
+            GridView1.DataSource = sqlcomm.ExecuteReader();
+            GridView1.DataBind();
